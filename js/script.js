@@ -1,46 +1,55 @@
-// UBAH: Menambahkan class 'js' ke <html> agar selector '.js .reveal' di CSS aktif
-document.documentElement.classList.add("js");
+// Supabase
+const SUPABASE_URL = "https://odvsvexamcgyvlvaylpi.supabase.co";
+const SUPABASE_ANON_KEY = "sb_publishable_2mqM-z5vZpg4qExQYh4q5w_kH1vwpu0";
 
-/* =========================================
-   1. NAVBAR & HAMBURGER MENU
-   ========================================= */
+const supabaseClient =
+  window.supabase && SUPABASE_URL.startsWith("https://")
+    ? window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY)
+    : null;
+
+// Hamburger menu dan navbar
 const navbarNav = document.querySelector(".navbar-nav");
 const hamburger = document.querySelector("#hamburger-menu");
-// TAMBAH: Mengambil elemen navbar untuk efek shadow saat scroll
 const navbar = document.querySelector(".navbar");
 
-// UBAH: Menambahkan guard/cek elemen sebelum memasang event agar lebih aman
+if (navbar) {
+  const syncNavbarHeight = () => {
+    document.documentElement.style.setProperty(
+      "--navbar-h",
+      `${navbar.offsetHeight}px`,
+    );
+  };
+  syncNavbarHeight();
+
+  if ("ResizeObserver" in window) {
+    new ResizeObserver(syncNavbarHeight).observe(navbar);
+  } else {
+    window.addEventListener("resize", syncNavbarHeight);
+  }
+}
+
 if (hamburger && navbarNav) {
   hamburger.onclick = (e) => {
     e.preventDefault();
     navbarNav.classList.toggle("active");
-    // TAMBAH: Mengunci scroll body saat menu mobile terbuka (sesuai 'body.menu-open' di CSS)
-    document.body.classList.toggle(
-      "menu-open",
-      navbarNav.classList.contains("active"),
-    );
   };
 
   // Klik di luar sidebar untuk menutup nav
   document.addEventListener("click", function (e) {
     if (!hamburger.contains(e.target) && !navbarNav.contains(e.target)) {
       navbarNav.classList.remove("active");
-      document.body.classList.remove("menu-open");
     }
   });
 
-  // TAMBAH: Menutup menu otomatis saat salah satu link navigasi diklik
+  // Menutup menu otomatis saat salah satu link navigasi diklik
   navbarNav.querySelectorAll("a").forEach((link) => {
     link.addEventListener("click", () => {
       navbarNav.classList.remove("active");
-      document.body.classList.remove("menu-open");
     });
   });
 }
 
-/* =========================================
-   2. PORTOFOLIO SHOW MORE / SHOW LESS
-   ========================================= */
+// Portofolio show more
 const portofolioSection = document.getElementById("portofolio");
 const row = document.getElementById("portofolio-row");
 const btnShowMore = document.getElementById("btn-show-more");
@@ -110,28 +119,18 @@ if (row && btnShowMore && btnText) {
   window.addEventListener("resize", updateCardsVisibility);
 }
 
-/* =========================================
-   3. TESTIMONIAL SLIDER (TOMBOL & DRAG MANUAL)
-   ========================================= */
+// Testimonial slider
 const testiSlider = document.getElementById("testi-slider");
 const btnPrev = document.getElementById("testi-prev");
 const btnNext = document.getElementById("testi-next");
 
 if (testiSlider && btnPrev && btnNext) {
   const getScrollStep = () => {
-    // UBAH: Mengganti '.testi-card' menjadi '.testimonial-card' sesuai class di HTML & CSS
     const firstCard = testiSlider.querySelector(".testimonial-card");
-    // TAMBAH: Membaca nilai gap aktual dari CSS agar akurat di semua ukuran layar
+    // Membaca nilai gap aktual dari CSS agar akurat di semua ukuran layar
     const sliderStyle = window.getComputedStyle(testiSlider);
     const gap = parseFloat(sliderStyle.gap) || 24;
     return firstCard ? firstCard.offsetWidth + gap : 300;
-  };
-
-  // TAMBAH: Mengupdate status disabled tombol prev/next berdasarkan posisi scroll
-  const updateSliderButtons = () => {
-    const maxScrollLeft = testiSlider.scrollWidth - testiSlider.clientWidth - 2;
-    btnPrev.disabled = testiSlider.scrollLeft <= 2;
-    btnNext.disabled = testiSlider.scrollLeft >= maxScrollLeft;
   };
 
   btnNext.addEventListener("click", () => {
@@ -141,12 +140,6 @@ if (testiSlider && btnPrev && btnNext) {
   btnPrev.addEventListener("click", () => {
     testiSlider.scrollBy({ left: -getScrollStep(), behavior: "smooth" });
   });
-
-  testiSlider.addEventListener("scroll", updateSliderButtons, {
-    passive: true,
-  });
-  window.addEventListener("resize", updateSliderButtons);
-  updateSliderButtons();
 
   // Geser Manual dengan Klik & Tarik Mouse (Drag to Scroll)
   let isDown = false;
@@ -179,160 +172,89 @@ if (testiSlider && btnPrev && btnNext) {
   });
 }
 
-/* =========================================
-   4. FAQ ACCORDION
-   ========================================= */
+// FAQ accordion
 const faqItems = document.querySelectorAll(".faq-item");
 
 faqItems.forEach((item) => {
   const questionBtn = item.querySelector(".faq-question");
 
-  // TAMBAH: Menambahkan atribut aria-expanded awal untuk aksesibilitas
-  questionBtn.setAttribute("aria-expanded", "false");
-
   questionBtn.addEventListener("click", () => {
     const isAlreadyActive = item.classList.contains("active");
 
+    // Tutup semua item FAQ lain terlebih dahulu agar rapi
     faqItems.forEach((otherItem) => {
       otherItem.classList.remove("active");
-      const otherBtn = otherItem.querySelector(".faq-question");
-      if (otherBtn) otherBtn.setAttribute("aria-expanded", "false");
     });
 
+    // Jika item yang diklik tadi belum terbuka, buka sekarang
     if (!isAlreadyActive) {
       item.classList.add("active");
-      questionBtn.setAttribute("aria-expanded", "true");
     }
   });
 });
 
-/* =========================================
-   5. NAVBAR SCROLL SHADOW & BACK TO TOP
-   ========================================= */
-// TAMBAH: Mengontrol class '.is-scrolled' pada navbar dan '.is-visible' pada tombol back-to-top
-const backToTopBtn = document.getElementById("back-to-top");
-
-const handleScrollState = () => {
-  const scrollY = window.scrollY;
-
-  if (navbar) {
-    navbar.classList.toggle("is-scrolled", scrollY > 20);
-  }
-
-  if (backToTopBtn) {
-    backToTopBtn.classList.toggle("is-visible", scrollY > 400);
-  }
-};
-
-window.addEventListener("scroll", handleScrollState, { passive: true });
-handleScrollState();
-
-if (backToTopBtn) {
-  backToTopBtn.addEventListener("click", () => {
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  });
-}
-
-/* =========================================
-   6. CONTACT FORM HANDLER
-   ========================================= */
-// TAMBAH: Menangani submit form kontak dan menampilkan pesan pada '.form-status'
+// Contact form
 const contactForm = document.querySelector(".contact-form");
 const formStatus = document.querySelector(".form-status");
 
 if (contactForm && formStatus) {
-  contactForm.addEventListener("submit", (e) => {
+  contactForm.addEventListener("submit", async (e) => {
     e.preventDefault();
 
     const firstName = document.getElementById("first-name")?.value.trim();
-    const email = document.getElementById("email")?.value.trim();
+    const lastName = document.getElementById("last-name")?.value.trim();
+    const email = document.getElementById("email")?.value.trim().toLowerCase();
     const message = document.getElementById("message")?.value.trim();
 
     formStatus.classList.remove("is-success", "is-error");
 
-    if (!firstName || !email || !message) {
+    if (!firstName || !lastName || !email || !message) {
       formStatus.textContent = "Mohon lengkapi data yang wajib diisi.";
       formStatus.classList.add("is-error");
       return;
     }
 
-    const submitBtn = contactForm.querySelector(".btn-send");
-    if (submitBtn) submitBtn.disabled = true;
+    if (!supabaseClient) {
+      formStatus.textContent =
+        "Layanan pengiriman belum siap. Muat ulang halaman lalu coba lagi.";
+      formStatus.classList.add("is-error");
+      return;
+    }
 
-    // Simulasi pengiriman pesan (bisa diganti fetch/API endpoint asli)
-    setTimeout(() => {
-      formStatus.textContent = `Terima kasih, ${firstName}. Pesanmu sudah tercatat.`;
+    const submitBtn = contactForm.querySelector(".btn-send");
+    const submitLabel = submitBtn?.querySelector("span");
+    const defaultLabel = submitLabel?.textContent;
+
+    if (submitBtn) submitBtn.disabled = true;
+    if (submitLabel) submitLabel.textContent = "Sending...";
+    formStatus.textContent = "Mengirim pesan...";
+
+    try {
+      const { error } = await supabaseClient.from("contact_messages").insert({
+        first_name: firstName,
+        last_name: lastName,
+        email,
+        message,
+      });
+
+      if (error) throw error;
+
+      formStatus.textContent = `Terima kasih, ${firstName}. Pesanmu sudah terkirim.`;
       formStatus.classList.add("is-success");
       contactForm.reset();
+    } catch (error) {
+      console.error("Gagal mengirim pesan:", error);
+      formStatus.textContent =
+        "Pesan gagal terkirim. Silakan coba lagi beberapa saat lagi.";
+      formStatus.classList.add("is-error");
+    } finally {
       if (submitBtn) submitBtn.disabled = false;
-    }, 400);
+      if (submitLabel) submitLabel.textContent = defaultLabel;
+    }
   });
 }
 
-/* =========================================
-   SCROLL REVEAL & ACTIVE NAV LINK
-   ========================================= */
-const revealElements = document.querySelectorAll(".reveal");
-
-if ("IntersectionObserver" in window && revealElements.length > 0) {
-  const revealObserver = new IntersectionObserver(
-    (entries, observer) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add("is-visible");
-          observer.unobserve(entry.target); // animasi cukup sekali
-        }
-      });
-    },
-    { threshold: 0.15 },
-  );
-
-  revealElements.forEach((el) => revealObserver.observe(el));
-} else {
-  // Fallback jika browser lama tidak mendukung IntersectionObserver
-  revealElements.forEach((el) => el.classList.add("is-visible"));
-}
-
-// Highlight link navbar sesuai section yang sedang aktif
-const sections = document.querySelectorAll("section[id]");
-const navLinks = document.querySelectorAll(".navbar-nav a[href^='#']");
-
-if (sections.length > 0 && navLinks.length > 0) {
-  const setActiveNav = () => {
-    const scrollPos = window.scrollY + 120;
-
-    sections.forEach((section) => {
-      const top = section.offsetTop;
-      const height = section.offsetHeight;
-      const id = section.getAttribute("id");
-
-      if (scrollPos >= top && scrollPos < top + height) {
-        navLinks.forEach((link) => {
-          link.classList.toggle(
-            "is-active",
-            link.getAttribute("href") === `#${id}`,
-          );
-        });
-      }
-    });
-  };
-
-  window.addEventListener("scroll", setActiveNav, { passive: true });
-  setActiveNav();
-}
-
-/* =========================================
-   SIGN UP & SIGN IN DENGAN SUPABASE
-   ========================================= */
-// UBAH: Ganti nilai di bawah dengan Project URL dan Anon Key dari dashboard Supabase
-const SUPABASE_URL = "https://odvsvexamcgyvlvaylpi.supabase.co";
-const SUPABASE_ANON_KEY = "sb_publishable_2mqM-z5vZpg4qExQYh4q5w_kH1vwpu0";
-
-const supabaseClient =
-  window.supabase && SUPABASE_URL.startsWith("https://")
-    ? window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY)
-    : null;
-
+// Sign in & sign up
 const authModal = document.getElementById("auth-modal");
 const authBackdrop = document.getElementById("auth-modal-backdrop");
 const authCloseBtn = document.getElementById("auth-close");
@@ -362,9 +284,9 @@ const switchMode = (mode) => {
   signInForm?.classList.toggle("is-hidden", !isSignIn);
   signUpForm?.classList.toggle("is-hidden", isSignIn);
   if (modalTitle) {
-    modalTitle.textContent = isSignIn
-      ? "Masuk ke OmahFE"
-      : "Daftar Akun OmahFE";
+    modalTitle.innerHTML = isSignIn
+      ? "Masuk ke Omah<span>FE</span>"
+      : "Daftar Akun Omah<span>FE</span>";
   }
   setFeedback(signInFeedback, "");
   setFeedback(signUpFeedback, "");
@@ -374,18 +296,15 @@ const openModal = (mode = "signin") => {
   if (!authModal) return;
   switchMode(mode);
   authModal.classList.add("is-open");
-  authModal.setAttribute("aria-hidden", "false");
   document.body.style.overflow = "hidden";
 };
 
 const closeModal = () => {
   if (!authModal) return;
   authModal.classList.remove("is-open");
-  authModal.setAttribute("aria-hidden", "true");
   document.body.style.overflow = "";
 };
 
-// UBAH: Render badge user & tombol Logout berdasarkan session aktif dari Supabase
 const renderNavbarUser = (user) => {
   document.getElementById("navbar-user-badge")?.remove();
   document.getElementById("navbar-logout-btn")?.remove();
@@ -408,7 +327,7 @@ const renderNavbarUser = (user) => {
     logoutBtn.className = "btn-logout";
     logoutBtn.textContent = "Logout";
 
-    // UBAH: Sign out resmi lewat supabaseClient.auth.signOut()
+    // Sign out resmi lewat supabaseClient.auth.signOut()
     logoutBtn.addEventListener("click", async () => {
       if (!supabaseClient) return;
       await supabaseClient.auth.signOut();
@@ -438,7 +357,7 @@ tabSignUp?.addEventListener("click", () => switchMode("signup"));
 authCloseBtn?.addEventListener("click", closeModal);
 authBackdrop?.addEventListener("click", closeModal);
 
-// UBAH: Proses Sign Up ke Supabase Auth
+// Proses Sign Up ke Supabase Auth
 signUpForm?.addEventListener("submit", async (e) => {
   e.preventDefault();
   if (!supabaseClient) {
@@ -503,7 +422,7 @@ signUpForm?.addEventListener("submit", async (e) => {
   }
 });
 
-// UBAH: Proses Sign In ke Supabase Auth
+// Proses Sign In ke Supabase Auth
 signInForm?.addEventListener("submit", async (e) => {
   e.preventDefault();
   if (!supabaseClient) {
@@ -547,7 +466,7 @@ signInForm?.addEventListener("submit", async (e) => {
   setTimeout(closeModal, 500);
 });
 
-// UBAH: Pantau sesi awal & perubahan status login secara otomatis
+// Pantau sesi awal & perubahan status login secara otomatis
 if (supabaseClient) {
   supabaseClient.auth.getSession().then(({ data }) => {
     renderNavbarUser(data.session?.user || null);
@@ -556,4 +475,32 @@ if (supabaseClient) {
   supabaseClient.auth.onAuthStateChange((_event, session) => {
     renderNavbarUser(session?.user || null);
   });
+}
+
+// Highlight link navbar sesuai section yang sedang aktif
+const sections = document.querySelectorAll("section[id]");
+const navLinks = document.querySelectorAll(".navbar-nav a[href^='#']");
+
+if (sections.length > 0 && navLinks.length > 0) {
+  const setActiveNav = () => {
+    const scrollPos = window.scrollY + 120;
+
+    sections.forEach((section) => {
+      const top = section.offsetTop;
+      const height = section.offsetHeight;
+      const id = section.getAttribute("id");
+
+      if (scrollPos >= top && scrollPos < top + height) {
+        navLinks.forEach((link) => {
+          link.classList.toggle(
+            "is-active",
+            link.getAttribute("href") === `#${id}`,
+          );
+        });
+      }
+    });
+  };
+
+  window.addEventListener("scroll", setActiveNav, { passive: true });
+  setActiveNav();
 }

@@ -2,69 +2,52 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>OmahFe</title>
+    <title>OmahFE</title>
 
-    <!-- Font 1 : Mystery Quest -->
+    <!-- Font : Mystery Quest & Inter -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Mystery+Quest&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400..700&family=Mystery+Quest&display=swap"
       rel="stylesheet"
     />
-
-    <!-- UBAH: menambahkan Google Fonts "Inter" karena dipakai di body CSS -->
-    <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap"
-      rel="stylesheet"
-    />
-
-    <!-- Feather Icons -->
-    <script src="https://unpkg.com/feather-icons"></script>
-
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
     <!-- My style -->
     <link rel="stylesheet" href="css/style.css" />
   </head>
 
   <body>
-    <!-- UBAH: menambahkan skip-link sesuai style .skip-link di CSS -->
-    <a href="#main-content" class="skip-link">Skip to content</a>
-
     <!-- Navbar start -->
-    <nav class="navbar">
-      <a href="#" class="navbar-logo">OmahFE</a>
+    <header class="navbar">
+      <a href="#about" class="navbar-logo">OmahFE</a>
 
-      <div class="navbar-nav">
+      <nav class="navbar-nav" id="navbar-nav">
         <a href="#about">About</a>
         <a href="#features">Features</a>
         <a href="#portofolio">Portofolio</a>
         <a href="#testimonial">Testimonial</a>
         <a href="#faq">FAQ</a>
         <a href="#contact">Contact</a>
-      </div>
+      </nav>
 
       <div class="navbar-extra">
-        <a href="#" class="sign-in">Sign in</a>
-        <a href="#" class="sign-up">Sign up</a>
-        <a href="#" id="hamburger-menu"><i data-feather="menu"></i></a>
+        <a href="#" class="sign-in">Sign In</a>
+        <a href="#" class="sign-up">Sign Up</a>
+        <button type="button" id="hamburger-menu">
+          <i data-feather="menu"></i>
+        </button>
       </div>
-    </nav>
+    </header>
     <!-- Navbar end -->
 
-    <!-- UBAH: membungkus konten utama dengan id="main-content" untuk skip-link -->
-    <div id="main-content">
+    <main>
       <!-- Hero Section start -->
       <section class="hero" id="about">
-        <main class="content">
+        <div class="content">
           <div class="content-text">
             <h1>Omah<span>FE</span></h1>
-            <!-- UBAH: menggunakan class="hero-tagline" pada h2 agar sesuai selector .hero .content .content-text .hero-tagline -->
-            <h2 class="hero-tagline">
-              We Slice <span>FrontEnd</span> for <span>Everyone</span>
-            </h2>
+            <h2>We Slice <span>FrontEnd</span> for <span>Everyone</span></h2>
             <p>
               Lorem ipsum dolor sit amet, consectetur adipiscing elit.
               Pellentesque efficitur quam orci. Donec cursus nibh vitae diam
@@ -75,21 +58,41 @@
           </div>
 
           <div class="content-image">
-            <img src="assets/images/FE.png" alt="FE" />
+            <img src="assets/images/FE.png" alt="FE" fetchpriority="high" />
           </div>
-        </main>
+        </div>
 
         <div class="social-media">
-          <a href="https://www.facebook.com" class="facebook">
+          <a
+            href="https://www.facebook.com"
+            class="facebook"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
             <img src="assets/icons/facebook.png" alt="facebook" />
           </a>
-          <a href="https://www.instagram.com" class="instagram">
+          <a
+            href="https://www.instagram.com"
+            class="instagram"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
             <img src="assets/icons/instragram.png" alt="instagram" />
           </a>
-          <a href="https://x.com" class="twitter">
+          <a
+            href="https://x.com"
+            class="twitter"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
             <img src="assets/icons/twitter.png" alt="twitter" />
           </a>
-          <a href="https://www.linkedin.com" class="linkedin">
+          <a
+            href="https://www.linkedin.com"
+            class="linkedin"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
             <img src="assets/icons/linkedin.png" alt="linkedin" />
           </a>
         </div>
@@ -98,7 +101,6 @@
 
       <!-- About Section start -->
       <section id="features" class="about">
-        <!-- UBAH: mengganti h1 menjadi h2 agar sesuai selector .about h2 -->
         <h2 class="font-scotch">Tentang Kami</h2>
         <p>
           Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque
@@ -128,6 +130,8 @@
         <a
           href="https://www.omahti.com/divisions/frontend-development"
           class="btn-about"
+          target="_blank"
+          rel="noopener noreferrer"
           >Selanjutnya<i data-feather="arrow-right"></i
         ></a>
       </section>
@@ -135,9 +139,8 @@
 
       <!-- Portofolio Section start -->
       <section id="portofolio" class="portofolio">
-        <!-- UBAH: mengganti h1 menjadi h2 agar sesuai selector .portofolio h2 -->
         <h2>
-          <span class="font-scotch"> See Our Latest</span>
+          <span class="font-scotch">See Our Latest</span>
           <span class="font-mystery">Portofolio</span>
         </h2>
 
@@ -147,6 +150,8 @@
               src="assets/images/Gambar.png"
               alt="ilustrasi"
               class="portofolio-card-img"
+              loading="lazy"
+              decoding="async"
             />
             <h3 class="font-mystery">Lorem Ipsum</h3>
           </div>
@@ -155,6 +160,8 @@
               src="assets/images/Gambar.png"
               alt="ilustrasi"
               class="portofolio-card-img"
+              loading="lazy"
+              decoding="async"
             />
             <h3 class="font-mystery">Lorem Ipsum</h3>
           </div>
@@ -163,6 +170,8 @@
               src="assets/images/Gambar.png"
               alt="ilustrasi"
               class="portofolio-card-img"
+              loading="lazy"
+              decoding="async"
             />
             <h3 class="font-mystery">Lorem Ipsum</h3>
           </div>
@@ -171,6 +180,8 @@
               src="assets/images/Gambar.png"
               alt="ilustrasi"
               class="portofolio-card-img"
+              loading="lazy"
+              decoding="async"
             />
             <h3 class="font-mystery">Lorem Ipsum</h3>
           </div>
@@ -179,6 +190,8 @@
               src="assets/images/Gambar.png"
               alt="ilustrasi"
               class="portofolio-card-img"
+              loading="lazy"
+              decoding="async"
             />
             <h3 class="font-mystery">Lorem Ipsum</h3>
           </div>
@@ -187,6 +200,8 @@
               src="assets/images/Gambar.png"
               alt="ilustrasi"
               class="portofolio-card-img"
+              loading="lazy"
+              decoding="async"
             />
             <h3 class="font-mystery">Lorem Ipsum</h3>
           </div>
@@ -195,14 +210,16 @@
               src="assets/images/Gambar.png"
               alt="ilustrasi"
               class="portofolio-card-img"
+              loading="lazy"
+              decoding="async"
             />
             <h3 class="font-mystery">Lorem Ipsum</h3>
           </div>
         </div>
 
-        <a href="javascript:void(0)" class="btn-portofolio" id="btn-show-more">
+        <button type="button" class="btn-portofolio" id="btn-show-more">
           <span id="btn-text">Show More</span><i data-feather="arrow-down"></i>
-        </a>
+        </button>
       </section>
       <!-- Portofolio Section end -->
 
@@ -221,75 +238,66 @@
           <div class="testimonial-slider" id="testi-slider">
             <div class="testimonial-card card-peach">
               <div class="testimonial-media">
-                <img src="assets/images/Gambar.png" alt="Janu Pasha Shandy" />
+                <img
+                  src="assets/images/Gambar.png"
+                  alt="Janu Pasha Shandy"
+                  loading="lazy"
+                />
               </div>
               <div class="testimonial-info">
                 <h3>Janu Pasha Shandy</h3>
                 <span class="testimonial-role">Staff of OmahFE</span>
                 <p>
                   Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem
-                  ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum
-                  dolor sit amet, consectetur adipiscing elit.
+                  ipsum dolor sit amet, consectetur adipiscing elit.
                 </p>
               </div>
             </div>
 
             <div class="testimonial-card card-blue">
-              <div class="testimonial-media">
-                <!-- <img src="assets/images/Gambar.png" alt="Janu Pasha Shandy" /> -->
-              </div>
+              <div class="testimonial-media"></div>
               <div class="testimonial-info">
                 <h3>Janu Pasha Shandy</h3>
                 <span class="testimonial-role">Staff of OmahFE</span>
                 <p>
                   Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem
-                  ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum
-                  dolor sit amet, consectetur adipiscing elit.
+                  ipsum dolor sit amet, consectetur adipiscing elit.
                 </p>
               </div>
             </div>
 
             <div class="testimonial-card card-peach">
-              <div class="testimonial-media">
-                <!-- <img src="assets/images/Gambar.png" alt="Janu Pasha Shandy" /> -->
-              </div>
+              <div class="testimonial-media"></div>
               <div class="testimonial-info">
                 <h3>Janu Pasha Shandy</h3>
                 <span class="testimonial-role">Staff of OmahFE</span>
                 <p>
                   Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem
-                  ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum
-                  dolor sit amet, consectetur adipiscing elit.
+                  ipsum dolor sit amet, consectetur adipiscing elit.
                 </p>
               </div>
             </div>
 
             <div class="testimonial-card card-blue">
-              <div class="testimonial-media">
-                <!-- <img src="assets/images/Gambar.png" alt="Janu Pasha Shandy" /> -->
-              </div>
+              <div class="testimonial-media"></div>
               <div class="testimonial-info">
                 <h3>Janu Pasha Shandy</h3>
                 <span class="testimonial-role">Staff of OmahFE</span>
                 <p>
                   Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem
-                  ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum
-                  dolor sit amet, consectetur adipiscing elit.
+                  ipsum dolor sit amet, consectetur adipiscing elit.
                 </p>
               </div>
             </div>
 
             <div class="testimonial-card card-peach">
-              <div class="testimonial-media">
-                <!-- <img src="assets/images/Gambar.png" alt="Janu Pasha Shandy" /> -->
-              </div>
+              <div class="testimonial-media"></div>
               <div class="testimonial-info">
                 <h3>Janu Pasha Shandy</h3>
                 <span class="testimonial-role">Staff of OmahFE</span>
                 <p>
                   Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem
-                  ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum
-                  dolor sit amet, consectetur adipiscing elit.
+                  ipsum dolor sit amet, consectetur adipiscing elit.
                 </p>
               </div>
             </div>
@@ -300,20 +308,19 @@
           </button>
         </div>
       </section>
-      <!-- Tertimonial Section end -->
+      <!-- Testimonial Section end -->
 
       <!-- FAQ Section start-->
       <section class="faq" id="faq">
-        <!-- UBAH: mengganti h1 menjadi h2 agar sesuai selector .faq h2 -->
         <h2 class="font-scotch">FAQ</h2>
 
         <div class="faq-container">
           <div class="faq-item">
             <button type="button" class="faq-question">
-              <span
-                >Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem
-                ipsum dolor sit amet</span
-              >
+              <span>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem
+                ipsum dolor sit amet
+              </span>
               <i data-feather="chevron-right"></i>
             </button>
             <div class="faq-answer">
@@ -333,10 +340,10 @@
 
           <div class="faq-item">
             <button type="button" class="faq-question">
-              <span
-                >Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem
-                ipsum dolor sit amet</span
-              >
+              <span>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem
+                ipsum dolor sit amet
+              </span>
               <i data-feather="chevron-right"></i>
             </button>
             <div class="faq-answer">
@@ -356,10 +363,10 @@
 
           <div class="faq-item">
             <button type="button" class="faq-question">
-              <span
-                >Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem
-                ipsum dolor sit amet</span
-              >
+              <span>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem
+                ipsum dolor sit amet
+              </span>
               <i data-feather="chevron-right"></i>
             </button>
             <div class="faq-answer">
@@ -379,10 +386,10 @@
 
           <div class="faq-item">
             <button type="button" class="faq-question">
-              <span
-                >Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem
-                ipsum dolor sit amet</span
-              >
+              <span>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem
+                ipsum dolor sit amet
+              </span>
               <i data-feather="chevron-right"></i>
             </button>
             <div class="faq-answer">
@@ -390,11 +397,7 @@
                 <p>
                   Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem
                   ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum
-                  dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor
-                  sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit
-                  amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet,
-                  consectetur adipiscing elit. Lorem ipsum dolor sit amet,
-                  consectetur adipiscing elit.
+                  dolor sit amet, consectetur adipiscing elit.
                 </p>
               </div>
             </div>
@@ -420,14 +423,17 @@
           <div class="contact-form-wrapper">
             <h2 class="font-scotch">Contact Us!</h2>
 
-            <form action="" class="contact-form">
+            <form class="contact-form" id="contact-form">
               <div class="form-row">
                 <div class="form-group">
                   <label for="first-name">First Name</label>
                   <input
                     type="text"
                     id="first-name"
+                    name="firstName"
+                    autocomplete="given-name"
                     placeholder="Enter first name"
+                    maxlength="100"
                     required
                   />
                 </div>
@@ -437,7 +443,10 @@
                   <input
                     type="text"
                     id="last-name"
+                    name="lastName"
+                    autocomplete="family-name"
                     placeholder="Enter last name"
+                    maxlength="100"
                     required
                   />
                 </div>
@@ -448,7 +457,10 @@
                 <input
                   type="email"
                   id="email"
+                  name="email"
+                  autocomplete="email"
                   placeholder="enter@gmail.com"
+                  maxlength="254"
                   required
                 />
               </div>
@@ -457,14 +469,15 @@
                 <label for="message">Message</label>
                 <textarea
                   id="message"
+                  name="message"
                   rows="6"
                   placeholder="Message"
+                  maxlength="2000"
                   required
                 ></textarea>
               </div>
 
-              <!-- UBAH: menambahkan elemen .form-status untuk status pengiriman form sesuai CSS -->
-              <p class="form-status" aria-live="polite"></p>
+              <p class="form-status" id="form-status"></p>
 
               <div class="form-submit">
                 <button type="submit" class="btn-send">
@@ -477,36 +490,59 @@
         </div>
       </section>
       <!-- Contact Section end -->
-    </div>
+    </main>
 
     <!-- Footer Start -->
     <footer class="footer">
       <div class="footer-container">
         <div class="footer-top">
-          <!-- Kolom Kiri -->
           <div class="footer-left">
             <div class="logo">
-              <img src="assets/images/Logo.png" alt="OmahFE" />
+              <img
+                src="assets/images/Logo.png"
+                alt="OmahFE"
+                loading="lazy"
+                decoding="async"
+              />
+              <p class="footer-address">
+                Gedung Fakultas MIPA UGM Sekip Utara, Bulaksumur, Sinduadi,
+                Mlati, Sleman, DI Yogyakarta
+              </p>
             </div>
-            <p class="footer-address">
-              Gedung Fakultas MIPA UGM Sekip Utara, Bulaksumur, Sinduadi, Mlati,
-              Sleman, DI Yogyakarta
-            </p>
 
             <div class="footer-social">
               <h2 class="font-scotch">Connect with Us</h2>
               <div class="social-icons">
-                <!-- Menggunakan aset ikon yang sudah Anda pakai di Hero Section -->
-                <a href="https://www.facebook.com" class="facebook">
+                <a
+                  href="https://www.facebook.com"
+                  class="facebook"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
                   <img src="assets/icons/facebook.png" alt="facebook" />
                 </a>
-                <a href="https://www.instagram.com" class="instagram">
+                <a
+                  href="https://www.instagram.com"
+                  class="instagram"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
                   <img src="assets/icons/instragram.png" alt="instagram" />
                 </a>
-                <a href="https://x.com" class="twitter">
+                <a
+                  href="https://x.com"
+                  class="twitter"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
                   <img src="assets/icons/twitter.png" alt="twitter" />
                 </a>
-                <a href="https://www.linkedin.com" class="linkedin">
+                <a
+                  href="https://www.linkedin.com"
+                  class="linkedin"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
                   <img src="assets/icons/linkedin.png" alt="linkedin" />
                 </a>
               </div>
@@ -541,49 +577,20 @@
     </footer>
     <!-- Footer End -->
 
-    <button
-      type="button"
-      class="back-to-top"
-      id="back-to-top"
-      aria-label="Kembali ke atas"
-    >
-      <i data-feather="arrow-up"></i>
-    </button>
-
-    <!-- Feather Icons -->
-    <script>
-      feather.replace();
-    </script>
-
-    <!-- Gemini login -->
-    <!-- UBAH: Modal Sign In & Sign Up untuk terhubung ke Supabase -->
-    <div
-      class="auth-modal"
-      id="auth-modal"
-      aria-hidden="true"
-      role="dialog"
-      aria-modal="true"
-      aria-labelledby="auth-modal-title"
-    >
+    <!-- Auth Modal (Sign In & Sign Up) start -->
+    <div class="auth-modal" id="auth-modal">
       <div class="auth-modal-backdrop" id="auth-modal-backdrop"></div>
 
       <div class="auth-modal-card">
-        <button
-          type="button"
-          class="auth-close"
-          id="auth-close"
-          aria-label="Tutup modal"
-        >
+        <button type="button" class="auth-close" id="auth-close">
           <i data-feather="x"></i>
         </button>
 
-        <div class="auth-tabs" role="tablist">
+        <div class="auth-tabs">
           <button
             type="button"
             class="auth-tab is-active"
             id="tab-signin"
-            role="tab"
-            aria-selected="true"
             data-mode="signin"
           >
             Sign In
@@ -592,15 +599,15 @@
             type="button"
             class="auth-tab"
             id="tab-signup"
-            role="tab"
-            aria-selected="false"
             data-mode="signup"
           >
             Sign Up
           </button>
         </div>
 
-        <h2 id="auth-modal-title" class="font-scotch">Masuk ke OmahFE</h2>
+        <h2 id="auth-modal-title" class="font-scotch">
+          Masuk ke Omah <span>FE</span>
+        </h2>
 
         <!-- Form Sign In -->
         <form id="signin-form" class="auth-form">
@@ -609,6 +616,7 @@
             <input
               type="email"
               id="signin-email"
+              autocomplete="email"
               placeholder="nama@email.com"
               required
             />
@@ -618,12 +626,13 @@
             <input
               type="password"
               id="signin-password"
+              autocomplete="current-password"
               placeholder="Minimal 6 karakter"
               minlength="6"
               required
             />
           </div>
-          <p class="auth-feedback" id="signin-feedback" aria-live="polite"></p>
+          <p class="auth-feedback" id="signin-feedback"></p>
           <button type="submit" class="auth-submit">Sign In</button>
         </form>
 
@@ -634,6 +643,7 @@
             <input
               type="text"
               id="signup-name"
+              autocomplete="name"
               placeholder="Nama kamu"
               required
             />
@@ -643,6 +653,7 @@
             <input
               type="email"
               id="signup-email"
+              autocomplete="email"
               placeholder="nama@email.com"
               required
             />
@@ -652,18 +663,26 @@
             <input
               type="password"
               id="signup-password"
+              autocomplete="new-password"
               placeholder="Minimal 6 karakter"
               minlength="6"
               required
             />
           </div>
-          <p class="auth-feedback" id="signup-feedback" aria-live="polite"></p>
+          <p class="auth-feedback" id="signup-feedback"></p>
           <button type="submit" class="auth-submit">Buat Akun</button>
         </form>
       </div>
     </div>
-    <!-- Gemini login -->
+    <!-- Auth Modal end -->
 
+    <!-- Feather Icons -->
+    <script src="https://unpkg.com/feather-icons"></script>
+    <script>
+      feather.replace();
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <!-- My javascript -->
     <script src="js/script.js"></script>
   </body>
