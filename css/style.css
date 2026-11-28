@@ -857,7 +857,12 @@ body {
 
 .form-status {
   min-height: 1.5em;
+  display: none;
   font-size: var(--fs-small);
+}
+
+.form-status:not(:empty) {
+  display: block;
 }
 
 .form-status.is-success {
