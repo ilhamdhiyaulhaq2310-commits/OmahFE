@@ -1,6 +1,6 @@
 Nama : Muhammad Ilham Dhiyaulhaq
 NIM : 26/577829/PA/24195
-Deployment : [vercel] https://omah-fe-ugm-frontend.vercel.app
+Deployment : [vercel] (https://omah-fe-ugm-frontend.vercel.app)
 
 ## 1. Desain Responsif
 
